@@ -44,3 +44,6 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 /results.json
+
+# gradescope
+*.zip

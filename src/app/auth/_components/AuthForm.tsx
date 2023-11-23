@@ -77,6 +77,7 @@ function AuthForm() {
               <span>
                 Do not have an account?{" "}
                 <a
+                  data-testid="sign-in-up-button"
                   className="cursor-pointer hover:underline"
                   onClick={() => setIsSignUp(true)}
                 >
@@ -86,7 +87,11 @@ function AuthForm() {
             )}
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button
+            data-testid="auth-submit-button"
+            type="submit"
+            className="w-full"
+          >
             Sign {isSignUp ? "Up" : "In"}
           </Button>
         </form>

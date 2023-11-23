@@ -14,8 +14,9 @@ type Props = {
 function AuthInput({ label, type, value, setValue }: Props) {
   return (
     <div className="w-full">
-      <Label>{label}</Label>
+      <Label htmlFor={label}>{label}</Label>
       <Input
+        id={label}
         type={type}
         value={value}
         onChange={(e) => {

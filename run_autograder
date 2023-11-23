@@ -5,6 +5,15 @@ export PATH="/root/.local/share/fnm:$PATH"
 eval "`fnm env`"
 
 TODO_FILES=(
+  src/app/auth/_components/AuthForm.tsx \
+  src/app/projects/actions.ts \
+  src/app/projects/[projectId]/actions.ts \
+  src/app/projects/_components/Navbar.tsx \
+  src/app/projects/_components/SignOutButton.tsx \
+  src/app/projects/create/_components/CreateProjectForm.tsx \
+  src/db/index.ts \
+  src/lib/auth/CredentialsProvider.ts \
+  src/lib/env/private.ts \
 )
 
 # copy files in TODO_FILES from /autograder/submission/ to /autograder/source/
@@ -14,22 +23,28 @@ for file in "${TODO_FILES[@]}"; do
   cp "/autograder/submission/$file" "/autograder/source/$file"
 done
 
-# Manual check if yarn install is working
+# Manual check if yarn install is working :)
 cd /autograder/source
 yarn install
-# Clear the database
-# rm -rf /data/db
-# mkdir -p /data/db
 
-# Run these commands in parallel
-# 1. `mongod --dbpath /data/db` to start the database
-# 2. `yarn test` to run the tests
-# 3. `yarn:dev:frontend` to start the frontend
-# 4. `yarn:dev:backend` to start the backend
-# yarn concurrently "mongod --dbpath /data/db" "GRADESCOPE=true yarn test" "yarn:dev:*" \
-#   -c "blue,gray,green,yellow" \
-#   -n "database,test" \
-#   --kill-others
+# Setup PostgreSQL Database
+su - postgres -c "bash -c '\
+# add postgres to the path
+export PATH=\"/usr/lib/postgresql/16/bin:\$PATH\"; \
+# init the database
+initdb -D /var/lib/postgresql/data; \
+# start the database
+pg_ctl -D /var/lib/postgresql/data -l logfile start; \
+# drop the database if it exists
+dropdb --if-exists hack2; \
+# create the database
+createdb hack2; \
+'"
+
+# Run tests
+cd /autograder/source
+yarn migrate
+GRADESCOPE=true yarn test
 
 # Generate the /autograder/results/results.json file
 mkdir -p /autograder/results

@@ -19,7 +19,9 @@ export default async function Navbar() {
   return (
     <nav className="flex min-w-fit flex-col justify-between gap-2 overflow-hidden bg-gray-100">
       <div className="flex h-10 w-full flex-row items-center gap-12 px-6 py-8 pt-8">
-        <h2 className="text-2xl font-bold">Your Projects</h2>
+        <h2 className="text-2xl font-bold" data-testid="title">
+          Your Projects
+        </h2>
       </div>
       <Separator />
       <Link

@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import DeleteProjectButton from "./_components/DeleteProjectButton";
 import TaskItem from "./_components/TaskItem";
-import { getProject, addTask } from "./actions";
+import { addTask, getProject } from "./actions";
 
 type Props = {
   params: { projectId: string };
@@ -48,8 +48,13 @@ export default async function ProjectsPage(props: Props) {
             }}
           >
             <div className="flex gap-4">
-              <Input placeholder="task title" name="title" />
-              <Button>add task</Button>
+              <Input
+                id="task-title-input"
+                // data-testid="task-title-input"
+                placeholder="task title"
+                name="title"
+              />
+              <Button data-testid="add-task-button">add task</Button>
             </div>
             <Textarea placeholder="task description" name="description" />
           </form>

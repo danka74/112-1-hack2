@@ -45,20 +45,20 @@ fnm install v18.18.0
 echo_yellow "$ corepack enable"
 corepack enable
 
-# #! Install MongoDB
-# print_boxed_string "INSTALLING MONGODB..."
-# # Import the public key used by the package management system
-# echo_yellow "$ curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor"
-# curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
-# # Create a list file for MongoDB
-# echo_yellow "$ echo \"deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse\" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list"
-# echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-# # Reload the local package database
-# echo_yellow "$ apt-get update"
-# apt-get update
-# # Install the MongoDB packages
-# echo_yellow "$ apt-get install -y mongodb-org"
-# apt-get install -y mongodb-org
+#! Install PostgreSQL
+print_boxed_string "INSTALLING POSTGRESQL 16..."
+# Add the PostgreSQL 16 repository
+echo_yellow "$ sh -c 'echo \"deb http://apt.postgresql.org/pub/repos/apt \$(lsb_release -cs)-pgdg main\" > /etc/apt/sources.list.d/pgdg.list'"
+sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+# Import the repository signing key
+echo_yellow "$ curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg"
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+# Update the package list
+echo_yellow "$ apt-get update"
+apt-get update
+# Install PostgreSQL 16 and contrib modules
+echo_yellow "$ apt-get install -y postgresql-16 postgresql-contrib-16"
+apt-get install -y postgresql-16 postgresql-contrib-16
 
 #! Setup the project
 print_boxed_string "SETTING UP PROJECT..."
@@ -74,3 +74,11 @@ yarn playwright install chromium
 # Install Playwright Chromium dependencies
 echo_yellow "$ yarn playwright install-deps chromium"
 yarn playwright install-deps chromium
+
+#! Create Env File
+print_boxed_string "CREATING ENV FILE..."
+# Create .env.local
+echo_yellow "Creating .env.local..."
+echo "POSTGRES_URL=postgres://postgres:postgres@localhost:5432/hack2
+AUTH_SECRET=this_is_a_secret
+NEXT_PUBLIC_BASE_URL=http://localhost:3000" > /autograder/source/.env.local

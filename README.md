@@ -1,7 +1,3 @@
-# Hack2 Problem Description
-
-Please refer to [this notion page](https://ric2k1.notion.site/Hack2-Todo-List-3cb34944f38d44438a5c245f009753ce)
-
 # Run the project
 
 ## Install dependencies
@@ -68,10 +64,17 @@ yarn migrate
 yarn dev
 ```
 
-## Run tests
+## Setup tests
 
 ```bash
 yarn playwright install chromium # Install Chromium (if not already installed)
 yarn playwright install-deps chromium # Install Chromium dependencies (if not already installed)
+```
+
+## Run tests
+
+```bash
 yarn test
 ```
+
+# 題目說明
