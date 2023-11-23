@@ -1,3 +1,7 @@
+# Hack2 Problem Description
+
+Please refer to [this notion page](https://ric2k1.notion.site/Hack2-Todo-List-3cb34944f38d44438a5c245f009753ce)
+
 # Run the project
 
 ## Install dependencies
