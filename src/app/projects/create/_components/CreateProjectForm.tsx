@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
-import { createProject } from "../../actions";
+// import { createProject } from "../../actions";
 import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,13 +21,13 @@ export default function CreateProjectForm() {
     useState<Project["description"]>("");
 
   const [isUploading, setIsUploading] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
   const { toast } = useToast();
 
   const handleCreate = async () => {
     setIsUploading(true);
     try {
-      const newProject = await createProject(projectName, projectDescription);
+      // const newProject = await createProject(projectName, projectDescription);
 
       // TODO: 5. After creating a project, redirect to the project page
       // hint: Why are some variables unused?
