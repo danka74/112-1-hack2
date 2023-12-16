@@ -27,12 +27,19 @@ export default CredentialsProvider({
       password: string;
     };
 
+    console.log("Authorize1");
+
+    console.log(credentials);
+
     try {
       validatedCredentials = authSchema.parse(credentials);
     } catch (error) {
+      console.log(error);
       return null;
     }
     const { email, name, password } = validatedCredentials;
+
+    console.log("Authorize2");
 
     const [existedUser] = await db
       .select({
@@ -52,7 +59,8 @@ export default CredentialsProvider({
         return null;
       }
       // TODO: 2.1 Hash password with bcrypt
-      const hashedPassword = password; // change this line
+      const hashedPassword = await bcrypt.hash(password, 10); // change this line
+      console.log(hashedPassword);
       // TODO: 2.1 end
 
       const [createdUser] = await db
@@ -82,7 +90,7 @@ export default CredentialsProvider({
       return null;
     }
     // TODO: 2.2 Compare password with bcrypt
-    const isValid = password === existedUser.hashedPassword; // change this line
+    const isValid = await bcrypt.compare(password, existedUser.hashedPassword); // change this line
     // TODO: 2.2 end
 
     if (!isValid) {
